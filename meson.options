@@ -1,0 +1,1 @@
+option('check-all-defined', type: 'feature')

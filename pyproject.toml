@@ -1,0 +1,79 @@
+[build-system]
+requires = ["meson-python"]
+build-backend = "mesonpy"
+
+[project]
+name = "kodo.inotify"
+version = "0.1.0"
+description = "Await notifications of filesystem events on Linux through a statically-typed, pythonic API"
+authors = [
+	{name = "Dom Sekotill", email = "dom.sekotill@kodo.org.uk"},
+]
+license = {file = "LICENCE.txt"}
+
+requires-python = "~=3.11"
+dependencies = [
+]
+
+classifiers = [
+	"Development Status :: 1 - Planning",
+	"Intended Audience :: Developers",
+	"License :: OSI Approved :: Mozilla Public License 2.0 (MPL 2.0)",
+	"Programming Language :: Python :: 3 :: Only",
+]
+
+[project.urls]
+Repository = "https://code.kodo.org.uk/dom/kodo.inotify"
+
+
+[tool.isort]
+force_single_line = true
+line_length = 92
+
+
+[tool.unimport]
+ignore-init = true
+
+
+[tool.flakeheaven]
+base = "https://code.kodo.org.uk/dom/project-templates/-/raw/main/.flakerules.toml"
+
+
+[tool.mypy]
+strict = true
+warn_unused_configs = true
+warn_unreachable = true
+
+
+[tool.coverage.run]
+data_file = "results/coverage.db"
+branch = true
+source = ["kodo"]
+
+[tool.coverage.report]
+precision = 2
+skip_empty = true
+exclude_lines = [
+	"pragma: no cover",
+	"if .*\\b__name__\\b",
+	"if .*\\bTYPE_CHECKING\\b",
+	"class .*(.*\\bProtocol\\b.*):",
+	"def __repr__",
+	"@overload",
+	"@(abc\\.)abstractmethod",
+]
+partial_branches = [
+	"pragma: no branch",
+	"if .*\\b__debug__\\b",
+]
+
+[tool.coverage.json]
+output = "results/coverage.json"
+show_contexts = true
+
+[tool.coverage.xml]
+output = "results/coverage.xml"
+
+[tool.coverage.html]
+directory = "results/coverage.html.d"
+show_contexts = true

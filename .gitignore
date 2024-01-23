@@ -1,0 +1,12 @@
+# Python object cache
+*.py[co]
+
+# Packages
+*.whl
+*.tar.gz
+
+# Test results
+/results/
+
+# Pre-Commit hooks
+/.*cache/
