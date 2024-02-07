@@ -23,7 +23,7 @@ classifiers = [
 ]
 
 [project.urls]
-Repository = "https://code.kodo.org.uk/dom/kodo.inotify"
+Repository = "https://github.com/domsekotill/kodo.inotify"
 
 
 [tool.isort]
