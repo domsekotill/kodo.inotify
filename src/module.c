@@ -39,9 +39,6 @@ static PyModuleDef module = {
 PyMODINIT_FUNC
 PyInit_inotify(void)
 {
-	if ( PyType_Ready(&Event_Type) < 0 )
-		return NULL;
-
 	return PyModuleDef_Init(&module);
 }
 

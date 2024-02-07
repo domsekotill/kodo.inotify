@@ -8,6 +8,4 @@
 #include <Python.h>
 
 
-extern PyTypeObject INotify_Type;
-
 int add_INotify(PyObject*);

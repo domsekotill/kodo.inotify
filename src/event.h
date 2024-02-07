@@ -10,8 +10,6 @@
 #include <Python.h>
 
 
-extern PyTypeObject Event_Type;
-
 int add_Event(PyObject*);
 
-PyObject* Event_from_struct(PyTypeObject *, struct inotify_event *);
+PyObject* Event_from_struct(struct inotify_event *);

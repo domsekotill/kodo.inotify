@@ -161,7 +161,7 @@ INotify_read_event(INotify *self)
 	if ( size < sizeof(struct inotify_event) || size < sizeof(struct inotify_event) + evt->len )
 		return PyErr_Format(PyExc_RuntimeError, "Incomplete read from inotify socket");
 
-	return Event_from_struct(&Event_Type, evt);
+	return Event_from_struct(evt);
 }
 
 
@@ -190,7 +190,7 @@ static PyMemberDef INotify_members[] = {
 };
 #endif
 
-PyTypeObject INotify_Type = {
+static PyTypeObject INotify_Type = {
 	PyVarObject_HEAD_INIT(NULL, 0)
 	.tp_name            = "kodo.inotify.INotify",
 	.tp_basicsize       = sizeof(INotify),
@@ -206,5 +206,8 @@ PyTypeObject INotify_Type = {
 int
 add_INotify(PyObject *module)
 {
+	if ( PyType_Ready(&INotify_Type) < 0 )
+		return -1;
+
 	return PyModule_AddType(module, &INotify_Type);
 }

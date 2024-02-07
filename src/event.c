@@ -35,6 +35,8 @@ typedef struct {
 	char     *name;
 } Event;
 
+static PyTypeObject Event_Type;
+
 
 static int
 Event_init(Event *self, PyObject *args, PyObject *kwargs)
@@ -91,30 +93,27 @@ Event_unpack(PyTypeObject *cls, PyObject *source)
 		return PyErr_Format(PyExc_ValueError, "Not enough bytes to unpack");
 	}
 
-	inst = Event_from_struct(cls, event);
+	inst = Event_from_struct(event);
 	PyBuffer_Release(&buffer);
 	return inst;
 }
 
 /* Create an Event instance from the values of 'event'
- *
- * If name is non-NULL it overrides event->name, to allow names to be passed in from an
- * external buffer.  The name MUST still be the same length as event->len.
  */
 PyObject*
-Event_from_struct(PyTypeObject *cls, struct inotify_event *event)
+Event_from_struct(struct inotify_event *event)
 {
 	// TODO: maybe use PyObject_New & manual init
 	PyObject *evtype = PyObject_CallFunction(EventFlag, "i", event->mask);
 
 	if ( event->len == 0 )
 		return PyObject_CallFunction(
-			(PyObject*) cls, "iNIN",
+			(PyObject*) &Event_Type, "iNIN",
 			event->wd, evtype, event->cookie, PyUnicode_FromString("")
 		);
 
 	return PyObject_CallFunction(
-		(PyObject*) cls, "iNIs",
+		(PyObject*) &Event_Type, "iNIs",
 		event->wd, evtype, event->cookie, event->name
 	);
 }
@@ -156,7 +155,7 @@ static PyMemberDef Event_members[] = {
 	{NULL},
 };
 
-PyTypeObject Event_Type = {
+static PyTypeObject Event_Type = {
 	PyVarObject_HEAD_INIT(NULL, 0)
 	.tp_name            = "kodo.inotify.Event",
 	.tp_basicsize       = sizeof(Event),
@@ -172,5 +171,8 @@ PyTypeObject Event_Type = {
 int
 add_Event(PyObject *module)
 {
+	if ( PyType_Ready(&Event_Type) < 0 )
+		return -1;
+
 	return PyModule_AddType(module, &Event_Type);
 }
