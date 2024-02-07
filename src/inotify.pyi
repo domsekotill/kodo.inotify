@@ -88,9 +88,34 @@ class Event:
 		"""
 
 class INotify:
+	"""
+	A wrapper for the file descriptor returned by `inotify_init(2)` functions
+
+	This will normally be the only class a user needs to instantiate directly.
+	"""
 
 	def fileno(self) -> int: ...
-	def setblocking(self, state: bool, /) -> None: ...
-	def add_watch(self, path: PathLike[str], events: EventFlag) -> int: ...
-	def rm_watch(self, watch_descriptor: int, /) -> None: ...
-	def read_event(self) -> Event: ...
+
+	def setblocking(self, state: bool, /) -> None:
+		"""
+		Enable or disable blocking mode on the inotify file descriptor
+		"""
+
+	def add_watch(self, path: PathLike[str], events: EventFlag) -> int:
+		"""
+		Add a path and watched event to the "watch list" and return a new watch descriptor
+
+		See `inotify_add_watch(2)`.
+		"""
+
+	def rm_watch(self, watch_descriptor: int, /) -> None:
+		"""
+		Remove the event associated with a watch descriptor from the watch list
+
+		See `inotify_rm_watch(2)`.
+		"""
+
+	def read_event(self) -> Event:
+		"""
+		Read and return a single `Event` from the inotify file descriptor
+		"""

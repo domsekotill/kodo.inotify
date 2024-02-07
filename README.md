@@ -8,6 +8,8 @@ left all I/O to the user, allowing them to use any I/O framework they wanted.
 My need for an inotify package disappeared so it has been left in this functional but 
 bare-bones state for the future.
 
+API documentation exists in *src/inotify.pyi*.
+
 [inotify-man]:
 	https://www.man7.org/linux/man-pages/man7/inotify.7.html
 	"inotify manual page hosted at man7.org"
