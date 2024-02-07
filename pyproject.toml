@@ -38,6 +38,9 @@ ignore-init = true
 [tool.flakeheaven]
 base = "https://code.kodo.org.uk/dom/project-templates/-/raw/main/.flakerules.toml"
 
+[tool.flakeheaven.exceptions."*.md"]
+flake8-print = ["-T*"]
+
 
 [tool.mypy]
 strict = true
